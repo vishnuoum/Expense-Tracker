@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.expense_tracker.db_mappers.UserMapper">
+
+    <insert id="register" parameterType="com.app.expense_tracker.models.User" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO users (username, password, phone) VALUES (#{username}, SHA1(#{password}), #{phone})
+    </insert>
+
+    <select id="login" parameterType="com.app.expense_tracker.models.User" resultType="String">
+        SELECT SHA1(id) FROM users WHERE phone = #{phone} AND password = SHA1(#{password})
+    </select>
+
+    <select id="getUser" parameterType="com.app.expense_tracker.models.User" resultType="String">
+        SELECT SHA1(id) FROM users WHERE SHA1(id) = #{id} AND password = SHA1(#{password})
+    </select>
+
+    <update id="updatePassword" parameterType="com.app.expense_tracker.models.User">
+        UPDATE users SET password = SHA1(#{password}) where SHA1(id) = #{id}
+    </update>
+
+    <update id="updatePhone" parameterType="com.app.expense_tracker.models.User">
+        UPDATE users SET phone = #{phone} where SHA1(id) = #{id} and password = SHA1(#{password})
+    </update>
+
+</mapper>

@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: local
+  jackson:
+    default-property-inclusion: NON_NULL
+
+mybatis:
+  mapper-locations: 'classpath*:**/mappers/*Mapper.xml'
